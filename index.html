@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="index.css"/>
+  <title>Research Hub | Home</title>
+</head>
+<body>
+  <header>
+    <h3>Research Hub</h3>
+    <nav>
+      <ul>
+        <li><a href="#">Login</a></li>
+        <li><a href="#">Signup</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="content">
+    <div class="search-area">
+      <div class="search">
+        <h1>Find a Research Paper</h1>
+        <input type="search" placeholder="Search for a Research paper" />
+      </div>
+    </div>
+
+    <div class="bottom">
+      <nav>
+        <ul id="categoryMenu">
+          <li><a href="#" class="active" data-category="education">Education & Learning</a></li>
+          <li><a href="#" data-category="technology">Technology</a></li>
+          <li><a href="#" data-category="health">Health</a></li>
+          <li><a href="#" data-category="finance">Finance</a></li>
+          <li><a href="#" data-category="entertainment">Entertainment</a></li>
+          <li><a href="#" data-category="travel">Travel</a></li>
+          <li><a href="#" data-category="personal">Personal Development</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="card-slider-container">
+      <button class="slide-btn left" onclick="scrollCards('left')">&#10094;</button>
+      <div class="cards" id="cardSlider"></div>
+      <button class="slide-btn right" onclick="scrollCards('right')">&#10095;</button>
+    </div>
+  </div>
+
+  <script>
+    const cardData = {
+      education: [
+        { title: "AI in Education", text: "Explores how AI enhances personalized learning paths..." },
+        { title: "Gamified Learning", text: "Analyzes the benefits of game-based learning models..." },
+        { title: "Remote Learning Tools", text: "Evaluates current tools supporting virtual classrooms..." }
+      ],
+      technology: [
+        { title: "Quantum Computing", text: "Discusses the potential of quantum processors..." },
+        { title: "Blockchain Beyond Crypto", text: "Explores blockchain in identity and governance..." },
+        { title: "5G Impact", text: "Reviews 5G’s influence on IoT and smart cities..." }
+      ],
+      health: [
+        { title: "Mental Health in Teens", text: "Studies rising anxiety levels and coping mechanisms..." },
+        { title: "Telemedicine", text: "Explores digital healthcare delivery and its future..." },
+        { title: "Nutritional Neuroscience", text: "Links between diet and cognitive development..." }
+      ],
+      finance: [
+        { title: "Decentralized Finance", text: "Overview of DeFi platforms disrupting traditional banking..." },
+        { title: "Financial Literacy", text: "Impact of education on youth financial decision-making..." },
+        { title: "AI in Banking", text: "How AI detects fraud and improves services..." }
+      ],
+      entertainment: [
+        { title: "Streaming vs Cinema", text: "Trends and effects of streaming platforms..." },
+        { title: "Gaming & Society", text: "Examines gaming's impact on mental and social health..." },
+        { title: "AI-Generated Music", text: "Ethics and creativity in machine-made art..." }
+      ],
+      travel: [
+        { title: "Sustainable Tourism", text: "Practices to minimize environmental travel impact..." },
+        { title: "Smart Travel", text: "Use of apps, AI, and automation in planning trips..." },
+        { title: "Post-COVID Tourism", text: "Shifts in tourist behavior after the pandemic..." }
+      ],
+      personal: [
+        { title: "Time Management", text: "Techniques for boosting daily productivity..." },
+        { title: "Habit Formation", text: "How habits are built and broken scientifically..." },
+        { title: "Goal Setting", text: "Research on effective personal goal achievement..." }
+      ]
+    };
+
+    function scrollCards(direction) {
+      const slider = document.getElementById('cardSlider');
+      const scrollAmount = 320;
+      slider.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+
+    function renderCards(category) {
+      const container = document.getElementById('cardSlider');
+      container.innerHTML = '';
+      cardData[category].forEach(card => {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'card';
+        cardEl.innerHTML = `<h3>${card.title}</h3><p>${card.text}</p>`;
+        container.appendChild(cardEl);
+      });
+    }
+
+    renderCards('education');
+
+    document.querySelectorAll('#categoryMenu a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('#categoryMenu a').forEach(el => el.classList.remove('active'));
+        link.classList.add('active');
+        const category = link.dataset.category;
+        renderCards(category);
+      });
+    });
+  </script>
+</body>
+</html>
